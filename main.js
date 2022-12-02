@@ -1,15 +1,25 @@
-let s = 'hElLo world! 2023';
+'use strict';
+const readline = require('readline');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
-function countIt(str) {
-  //let str = '';
-  let punctRE = /[.,\/#!$%\^&\*;:{}=\-_`~()]/g;
-  let spaceRE = /\s+/g;
-  let numRE = /[0-9]/g;
-  str = s.toLowerCase().replace(punctRE, "").replace(spaceRE, '').replace(numRE, '');
- // let output = '';
+const countIt = (str) => {
+    let punctRE = /[.,\/#!$%\^&\*;:{}=\-_`~()]/g;
+    let spaceRE = /\s+/g;
+    let numRE = /[0-9]/g;
+    str = str.toLowerCase().replace(spaceRE, '').replace(punctRE, "").replace(numRE, '');
 
-  const result = [...str].reduce((a, e) => { a[e] = a[e] ? a[e] + 1 : 1; return a }, {});
-  return result;
+    const result = [...str].reduce((a, e) => { a[e] = a[e] ? a[e] + 1 : 1; return a}, {});
+    console.log(result);
 }
 
-console.log('Hi :', countIt(s))
+const getPrompt = () => {
+  rl.question("Enter Sentence ", (str) => {
+    countIt(str);
+    getPrompt();
+  });
+};
+
+getPrompt();
